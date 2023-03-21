@@ -55,8 +55,7 @@ const Player = () => {
          }
    }, [currentSong, spotifyApi, session]);
 
-   // useEffect(() => {
-   // }, []);
+
 
    const handlePlaySong = async () => {
       const isActive = await fetchAvailableDevices();
