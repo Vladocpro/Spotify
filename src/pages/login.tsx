@@ -6,8 +6,8 @@ const Login = ({providers} : any) => {
    const {data: session} = useSession();
    const router = useRouter();
    useEffect(() => {
-      if(session) {
-         router.replace("/")
+      if(session?.user) {
+         router.push("/")
       }
    }, []);
 
