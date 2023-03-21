@@ -1,7 +1,16 @@
 import React, {useEffect} from 'react';
-import {getProviders, signIn, useSession} from "next-auth/react";
+import {getProviders, getSession, signIn, useSession} from "next-auth/react";
+import {useRouter} from "next/router";
 
 const Login = ({providers} : any) => {
+   const {data: session} = useSession();
+   const router = useRouter();
+   useEffect(() => {
+      if(session?.user) {
+         router.push("/")
+      }
+   }, []);
+
 
    return (
        <div className="flex flex-col items-center bg-black min-h-screen w-full justify-center">
@@ -22,11 +31,17 @@ const Login = ({providers} : any) => {
 
 export default Login;
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context : any) {
    const providers = await getProviders();
+   const session = await getSession(context);
    return {
       props: {
-         providers
+         providers,
+         session
       }
    }
 }
+
+
+
+
