@@ -5,8 +5,7 @@ export const config = {
 };
 export async function middleware(req : NextRequest) {
 
-   const url = req.nextUrl.clone()
-   url.pathname = '/login'
+   let url = req.nextUrl.clone()
    const token = await getToken({req, secret: process.env.JWT_SECRET});
    const { pathname } = req.nextUrl;
 
@@ -15,7 +14,8 @@ export async function middleware(req : NextRequest) {
    }
 
    if(!token && pathname !== '/login') {
-      return NextResponse.rewrite(url)
+      url.pathname = '/login'
+      return NextResponse.redirect(url)
    }
 
 }
