@@ -1,7 +1,16 @@
-import React from 'react';
-import {getProviders, signIn} from "next-auth/react";
+import React, {useEffect} from 'react';
+import {getProviders, signIn, useSession} from "next-auth/react";
+import {useRouter} from "next/router";
 
 const Login = ({providers} : any) => {
+   const {data: session} = useSession();
+   const router = useRouter();
+   useEffect(() => {
+      if(session) {
+         router.replace("/")
+      }
+   }, []);
+
    return (
        <div className="flex flex-col items-center bg-black min-h-screen w-full justify-center">
           <img src="../../assets/loginPage/spotify.png" alt="" className="w-52 mb-5"/>
