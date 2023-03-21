@@ -13,10 +13,8 @@ export async function middleware(req : NextRequest) {
    if(pathname.includes('/api/auth') || token) {
       return NextResponse.next()
    }
-   // @ts-ignore
-   const redirectURL = new URL(process.env.NEXTAUTH_URL)
    if(!token && pathname !== '/login') {
-      return NextResponse.redirect(redirectURL)
+      return NextResponse.redirect(url)
    }
 
 }
