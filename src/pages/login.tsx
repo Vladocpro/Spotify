@@ -3,13 +3,6 @@ import {getProviders, signIn, useSession} from "next-auth/react";
 import {useRouter} from "next/router";
 
 const Login = ({providers} : any) => {
-   const {data: session} = useSession();
-   const router = useRouter();
-   useEffect(() => {
-      if(session?.user) {
-         router.push("/")
-      }
-   }, []);
 
    return (
        <div className="flex flex-col items-center bg-black min-h-screen w-full justify-center">
