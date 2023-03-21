@@ -2,8 +2,9 @@
 I developed a Spotify clone using Typescript, React, Next, Spotify API. 
 
 # To download all depedencies:
-### `npm install`
-
+```bash
+npm install
+```
 
 
 # To run application:
