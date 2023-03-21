@@ -23,7 +23,7 @@ const Player = () => {
             // @ts-ignore
             dispatch(setCurrentSong(data.body?.item));
 
-            spotifyApi.getMyCurrentPlaybackState().then((data: Response) => {
+            spotifyApi.getMyCurrentPlaybackState().then((data : any) => {
                dispatch(setSongIsPlaying(data.body?.is_playing))
             })
          })
@@ -64,7 +64,7 @@ const Player = () => {
          alert("No active spotify sessions");
          return;
       }
-      spotifyApi.getMyCurrentPlaybackState().then((data: Response) => {
+      spotifyApi.getMyCurrentPlaybackState().then((data: any) => {
          if(data.body?.is_playing) {
             spotifyApi.pause();
             dispatch(setSongIsPlaying(false))
@@ -101,7 +101,7 @@ const Player = () => {
           </div>
           <div className="flex items-center space-x-3 md:space-x-4 justify-end pr-5">
              <img src="../../assets/player/volume.png" className="h-5 w-6" alt=""/>
-             <input className="w-14 md:w-28" type="range" value={volume} onChange={(e : Event) => setVolume(Number(e.target?.value))} style={getBackgroundSize()} min={0} max={100}/>
+             <input className="w-14 md:w-28" type="range" value={volume} onChange={(e ) => setVolume(Number(e.target?.value))} style={getBackgroundSize()} min={0} max={100}/>
           </div>
        </div>
    );

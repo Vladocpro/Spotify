@@ -5,8 +5,8 @@ import {SidebarIcons} from "../../components/sidebar/IconInterface";
 interface globalState {
    iconActive: string | null,
    playlistActive: string | null,
-   currentPlaylist: object | null,
-   currentSong: object | null,
+   currentPlaylist: any | null,
+   currentSong: any | null,
    songIsPlaying: boolean,
 }
 
@@ -45,7 +45,7 @@ export const globalSlice = createSlice({
       setCurrentPlaylist: (state, action:PayloadAction<object>) => {
          state.currentPlaylist = action.payload;
       },
-      setCurrentSong: (state, action:PayloadAction<object>) => {
+      setCurrentSong: (state, action:PayloadAction<any>) => {
          state.currentSong = action.payload;
       },
       setSongIsPlaying: (state, action:PayloadAction<boolean>) => {
