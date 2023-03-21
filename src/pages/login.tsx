@@ -1,15 +1,8 @@
-import React, {useEffect} from 'react';
-import {getProviders, getSession, signIn, useSession} from "next-auth/react";
-import {useRouter} from "next/router";
+import React from 'react';
+import {getProviders,  signIn} from "next-auth/react";
+
 
 const Login = ({providers} : any) => {
-   const {data: session} = useSession();
-   const router = useRouter();
-   useEffect(() => {
-      if(session?.user) {
-         router.push("/")
-      }
-   }, []);
 
 
    return (
@@ -31,13 +24,12 @@ const Login = ({providers} : any) => {
 
 export default Login;
 
-export async function getServerSideProps(context : any) {
+export async function getServerSideProps() {
    const providers = await getProviders();
-   const session = await getSession(context);
+
    return {
       props: {
          providers,
-         session
       }
    }
 }
