@@ -7,7 +7,7 @@ interface globalState {
    playlistActive: string | null,
    currentPlaylist: any | null,
    currentSong: any | null,
-   songIsPlaying: boolean,
+   songIsPlaying: boolean
 }
 
 

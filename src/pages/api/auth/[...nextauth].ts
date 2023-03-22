@@ -1,6 +1,7 @@
 import NextAuth from "next-auth"
 import SpotifyProvider from "next-auth/providers/spotify"
 import spotifyApi, {LOGIN_URL} from "../../../../lib/spotify"
+import {store} from "../../../redux/store";
 
 async function refreshAccessToken(token : any) {
    // console.log(token)
@@ -59,6 +60,8 @@ export const authOptions = {
 
       },
       async session({session, token} : any) {
+         // console.log("SESSION" + JSON.stringify(session, null, 4))
+         // console.log("TOKEN" + JSON.stringify(token, null, 4))
          session.user.accessToken = token.accessToken;
          session.user.refreshToken = token.refreshToken;
          session.user.username = token.username;

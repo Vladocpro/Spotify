@@ -40,7 +40,6 @@ const MainContent = () => {
       }
    }, [spotifyApi, playlistActiveId]);
 
-
    return (
        <div className="flex-grow h-screen overflow-y-scroll scrollbar-hide">
          <header className="absolute top-5 right-8">
@@ -51,15 +50,17 @@ const MainContent = () => {
             </div>
          </header>
 
-          <section className={`flex items-end space-x-7 bg-gradient-to-b to-black ${color} h-80 text-white p-8`}>
-             <img src={currentPlaylist?.images?.[0].url} className="h-44 w-44 shadow-2xl" alt=""/>
-             <div>
-                <p>PLAYLIST</p>
-                <h1 className="text-2xl md:text-3xl xl:text-5xl font-bold">
-                   {currentPlaylist?.name}
-                </h1>
-             </div>
-          </section>
+          {currentPlaylist !== null ? (
+              <section className={`flex items-end space-x-7 bg-gradient-to-b to-black ${color} h-80 text-white p-8`}>
+                 <img src={currentPlaylist?.images?.[0].url} className="h-44 w-44 shadow-2xl" style={{border: 0}} alt=""/>
+                 <div>
+                    <p>PLAYLIST</p>
+                    <h1 className="text-2xl md:text-3xl xl:text-5xl font-bold">
+                       {currentPlaylist.name}
+                    </h1>
+                 </div>
+              </section>
+          ) : (<div className={`flex items-end space-x-7 bg-gradient-to-b to-black ${color} h-80 text-white p-8`}></div>)}
 
           <div>
              <Songs/>
