@@ -22,7 +22,7 @@ export const SidebarIcons = {
    HEART: {
       icon:"./assets/sidebar/likeGray.png",
       iconActive:"./assets/sidebar/likeWhite.png",
-      title: "Liked Songs"
+      title: "Liked Songs",
    },
    PODCASTS: {
       icon:"./assets/sidebar/podcastGray.png",

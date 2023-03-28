@@ -6,6 +6,7 @@ import {RootState} from "../../redux/store";
 import useSpotify from "../../../hooks/useSpotify";
 import {setCurrentPlaylist} from "../../redux/slices/globalSlice";
 import Songs from "../songs/Songs";
+import {SidebarIcons} from "../sidebar/IconInterface";
 
 const colorsForGradient  = [
     "from-indigo-500",
@@ -18,6 +19,7 @@ const colorsForGradient  = [
 ];
 
 
+
 const MainContent = () => {
    const {data: session} = useSession();
    const [color, setColor] = useState<string | null>(null);
@@ -27,9 +29,9 @@ const MainContent = () => {
    const dispatch = useDispatch();
 
    useEffect(() => {
-      const randomNumber = Math.floor(Math.random() * colorsForGradient.length)
-      setColor(colorsForGradient[randomNumber])
+      randomColor();
    }, [currentPlaylist]);
+
 
    useEffect(() => {
       if (playlistActiveId !== null) {
@@ -39,6 +41,15 @@ const MainContent = () => {
          }).catch((err : Error) => console.log(err))
       }
    }, [spotifyApi, playlistActiveId]);
+
+   const randomColor = () => {
+      if(currentPlaylist.name !== SidebarIcons.HEART.title) {
+         const randomNumber = Math.floor(Math.random() * colorsForGradient.length)
+         setColor(colorsForGradient[randomNumber])
+      }
+      else setColor(colorsForGradient[0])
+   }
+
 
    return (
        <div className="flex-grow h-screen overflow-y-scroll scrollbar-hide">
@@ -56,7 +67,7 @@ const MainContent = () => {
                  <div>
                     <p>PLAYLIST</p>
                     <h1 className="text-2xl md:text-3xl xl:text-5xl font-bold">
-                       {currentPlaylist.name}
+                       {currentPlaylist?.name}
                     </h1>
                  </div>
               </section>

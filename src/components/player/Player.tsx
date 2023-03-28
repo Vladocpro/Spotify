@@ -5,7 +5,7 @@ import {RootState} from "../../redux/store";
 // import useSongInfo from "../../../hooks/useSongInfo";
 import {useSession} from "next-auth/react";
 import {setCurrentSong, setSongIsPlaying} from "../../redux/slices/globalSlice";
-import {fetchAvailableDevices} from "../../../lib/playerHandler";
+import {fetchAvailableDevices, fetchSessionData} from "../../../lib/playerHandler";
 import {EventType} from "next-auth";
 import {debounce} from "lodash";
 
@@ -22,12 +22,19 @@ const Player = () => {
          spotifyApi.getMyCurrentPlayingTrack().then((data : Response) => {
             // @ts-ignore
             dispatch(setCurrentSong(data.body?.item));
-
             spotifyApi.getMyCurrentPlaybackState().then((data : any) => {
                dispatch(setSongIsPlaying(data.body?.is_playing))
             })
          })
       }
+   }
+   const getAvailableDevices = () => {
+
+
+      // fetchSessionData().then((data: any) => {
+      //    console.log(data[0])
+      //    console.log(data[1])
+      // });
    }
 
    const getBackgroundSize = () => {
@@ -54,6 +61,11 @@ const Player = () => {
             setVolume(50);
          }
    }, [currentSong, spotifyApi, session]);
+
+   useEffect(() => {
+      getAvailableDevices();
+
+   }, [volume]);
 
 
 
@@ -96,8 +108,8 @@ const Player = () => {
 
              <img src="../../assets/player/forward.png" className="playerButton" alt=""/>
              <img src="../../assets/player/repeat.png" className="playerButton" alt=""/>
-
           </div>
+
           <div className="flex items-center space-x-3 md:space-x-4 justify-end pr-5">
              <img src="../../assets/player/volume.png" className="h-5 w-6" alt=""/>
              <input className="w-14 md:w-28" type="range" value={volume} onChange={(e ) => setVolume(Number(e.target?.value))} style={getBackgroundSize()} min={0} max={100}/>
