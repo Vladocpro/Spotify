@@ -3,7 +3,7 @@ import {IconType, SidebarIcons} from "./IconInterface";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../redux/store";
 import {setCurrentPlaylist, setIconActive} from "../../redux/slices/globalSlice";
-import {fetchLikedSongs} from "../../../lib/playerHandler";
+import {fetchLikedSongs, fetchPodcasts} from "../../../lib/playerHandler";
 interface SidebarIconItemProps {
    iconInfo: IconType
 }
@@ -13,9 +13,22 @@ const SidebarIconItem: FC<SidebarIconItemProps> = ({iconInfo}) => {
    const activeItemTitle = useSelector((state : RootState) => state.global.iconActive)
    const dispatch = useDispatch()
    const fetchData = async () => {
-      const data = await fetchLikedSongs();
-      console.log(data)
-      if(iconInfo.title === SidebarIcons.HEART.title) dispatch(setCurrentPlaylist(data))
+      switch (iconInfo.title) {
+         case SidebarIcons.HEART.title: {
+            const likedSongs : any = await fetchLikedSongs();
+            dispatch(setCurrentPlaylist(likedSongs))
+            break;
+         }
+         case SidebarIcons.PODCASTS.title: {
+            const podcasts : any = await fetchPodcasts();
+            console.log(podcasts)
+            dispatch(setCurrentPlaylist(podcasts))
+            break
+         }
+         default: {
+
+         }
+      }
    }
 
    return (

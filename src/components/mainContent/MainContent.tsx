@@ -7,6 +7,7 @@ import useSpotify from "../../../hooks/useSpotify";
 import {setCurrentPlaylist} from "../../redux/slices/globalSlice";
 import Songs from "../songs/Songs";
 import {SidebarIcons} from "../sidebar/IconInterface";
+import {fetchLikedSongs, fetchPodcasts} from "../../../lib/playerHandler";
 
 const colorsForGradient  = [
     "from-indigo-500",
@@ -35,19 +36,27 @@ const MainContent = () => {
 
    useEffect(() => {
       if (playlistActiveId !== null) {
-         spotifyApi.getPlaylist(playlistActiveId).then((data : any[]) => {
-            // @ts-ignore
+         spotifyApi.getPlaylist(playlistActiveId).then((data : any) => {
             dispatch(setCurrentPlaylist(data.body))
          }).catch((err : Error) => console.log(err))
       }
    }, [spotifyApi, playlistActiveId]);
 
    const randomColor = () => {
-      if(currentPlaylist.name !== SidebarIcons.HEART.title) {
-         const randomNumber = Math.floor(Math.random() * colorsForGradient.length)
-         setColor(colorsForGradient[randomNumber])
+      switch (currentPlaylist?.name) {
+         case SidebarIcons.HEART.title: {
+            setColor(colorsForGradient[0])
+            break;
+         }
+         case SidebarIcons.PODCASTS.title: {
+            setColor(colorsForGradient[2])
+            break;
+         }
+         default: {
+            const randomNumber = Math.floor(Math.random() * colorsForGradient.length)
+            setColor(colorsForGradient[randomNumber])
+         }
       }
-      else setColor(colorsForGradient[0])
    }
 
 
@@ -63,7 +72,7 @@ const MainContent = () => {
 
           {currentPlaylist !== null ? (
               <section className={`flex items-end space-x-7 bg-gradient-to-b to-black ${color} h-80 text-white p-8`}>
-                 <img src={currentPlaylist?.images?.[0].url} className="h-44 w-44 shadow-2xl" style={{border: 0}} alt=""/>
+                 <img src={currentPlaylist?.images?.[0].url} className="h-44 w-44 xl:h-[215px] xl:w-[215px] shadow-2xl" style={{border: 0}} alt=""/>
                  <div>
                     <p>PLAYLIST</p>
                     <h1 className="text-2xl md:text-3xl xl:text-5xl font-bold">

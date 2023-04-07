@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import useSpotify from "../../../hooks/useSpotify";
 import {millisToMinutesAndSeconds} from "../../../lib/time";
-import {useDispatch, useSelector} from "react-redux";
+import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../redux/store";
 import {setCurrentSong, setSongIsPlaying} from "../../redux/slices/globalSlice";
 import {fetchAvailableDevices} from "../../../lib/playerHandler";
@@ -17,7 +17,6 @@ const Song : FC<SongProps> = ({track, order})  => {
    const currentSong = useSelector((state : RootState) => state.global.currentSong);
    const songIsPlaying = useSelector((state : RootState) => state.global.songIsPlaying);
    const dispatch = useDispatch();
-   // console.log("rerender " + order)
    const playSong = async () => {
       const isActive = await fetchAvailableDevices();
       if (!isActive) {
@@ -55,9 +54,8 @@ const Song : FC<SongProps> = ({track, order})  => {
                    } else {
                       return (<p className={`w-6 text-right ${currentSong?.name === track?.track?.name ? "text-[#1ED754]" : ""}`}>{order + 1}</p>)
                    }
-                   // return null;
                 })()}
-                <img className="h-10 w-10" src={track?.track?.album?.images?.[0]?.url} alt=""/>
+                <img className="h-10 w-10" src={track?.track?.album?.images?.[0]?.url } alt=""/>
              </div>
 
              <div>
